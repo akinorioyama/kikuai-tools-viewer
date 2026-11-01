@@ -51,3 +51,28 @@ arguments の 1 件の例:
 | 同様の声・返信 | `article.kx-related-voice#comment-<番号>` | `1000000000 + <番号>` |
 
 Chrome 拡張（`extension/kikuai-args-viewer`）は、この対応を使って表示しています。クラスタの見出しは、arguments の `cluster_ids` を clusters TSV の `id` と突き合わせて表示しています。
+
+## 5. みんなの声の一覧（`extract-voices.js`）
+
+「みんなの声」タブは、公開ページの URL のクエリでページを切り替えています。
+
+- `tab=voices` で「みんなの声」タブ、`voice_page=<番号>` でページ番号、`sort=new` で新しい順になります。
+- 各ページの HTML を `fetch` で取得し、`DOMParser` で読んでいます。ページ番号を増やしていき、新しい声（まだ見ていない `article.kikuai-open-card` の `id`）が出てこなくなったところで止めます。
+- 声とコメントの要素は、4 の表のものと同じです。項目は次の要素から取っています。
+
+| 項目 | 要素 |
+|---|---|
+| 声の日付・投稿者・ジャンル・本文 | `.kikuai-open-card__date`、`.kikuai-open-card__meta strong`、`.kikuai-open-card__genre`、`.kikuai-open-card__text` |
+| 声のコメント件数 | `[data-comments-toggle]` の文字列の中の数字 |
+| コメントの日付・本文 | `time`、`.kx-related-voice__text` |
+| コメントの区分・属性 | `.kx-related-voice__identity`、`.kx-comment-profile span`（`・` でつないだもの） |
+
+本文の `<br>` は改行に置き換えています。
+
+## 6. プロット（ブックマークレット）
+
+レポート本体のプロットは Plotly で描かれていて、`.js-plotly-plot` の要素の `data` から点のデータを読めます。
+
+- ブックマークレットは、偶数番号（0, 2, 4, …）のトレースだけを対象にしています（元の show-plotly-data のブックマークレットと同じ扱いです）。
+- 各点の `text` に「クラスタ名`<br>`意見の本文」、`customdata` に `arg_id` が入っています。`comment_id` とクラスタの情報は点のデータに無いので、3 の方法で arguments と clusters を読み、`arg_id` で突き合わせています。
+- 印の丸は、`layout.xaxis.range` / `layout.yaxis.range` と SVG の大きさから位置を計算して、SVG に `circle` を追加して描いています。

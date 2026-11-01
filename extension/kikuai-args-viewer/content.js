@@ -172,8 +172,8 @@
     const bar = document.createElement('div');
     bar.id = 'kxa-toolbar';
     bar.innerHTML = `<span class="kxa-status"></span>
-      <button type="button" data-act="load">TSV取込</button>
-      <button type="button" data-act="loadcl">クラスタ取込</button>
+      <button type="button" data-act="load">argument取込</button>
+      <button type="button" data-act="loadcl">cluster取込</button>
       <button type="button" data-act="clear">解除</button>
       <input type="file" data-for="args" accept=".tsv,.txt,text/tab-separated-values" hidden>
       <input type="file" data-for="clusters" accept=".tsv,.txt,text/tab-separated-values" hidden>`;
@@ -232,7 +232,7 @@
     const a = meta ? `${meta.name}（${meta.rows}行）` : 'TSV未取込';
     const c = clMeta ? `${clMeta.name}（${clMeta.rows}行）` : 'クラスタ未取込';
     s.textContent = a + ' ／ ' + c;
-    s.title = [meta ? 'TSV取込: ' + meta.loadedAt : '', clMeta ? 'クラスタ取込: ' + clMeta.loadedAt : ''].filter(Boolean).join('\n');
+    s.title = [meta ? 'argument取込: ' + meta.loadedAt : '', clMeta ? 'cluster取込: ' + clMeta.loadedAt : ''].filter(Boolean).join('\n');
   }
 
   // ---------- 動的に追加・再描画される要素への対応 ----------

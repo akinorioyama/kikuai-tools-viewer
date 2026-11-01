@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "聴くAI arguments ビューア",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "arguments TSV とクラスタ TSV を取り込み、みんなの声の各声・コメントの横に抽出された意見と所属クラスタを表示します。",
   "permissions": ["storage"],
   "content_scripts": [
